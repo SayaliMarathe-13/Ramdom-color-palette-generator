@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>color</title>
+
+</head>
+
+
+<body>
+  <div class="color-card" id="colorCard">
+    <div
+         class="color-card__top"
+         id="displayColor"
+         onClick="changeColor()"
+     ></div>
+    <div class="color-card__bottom">
+      <p id="hexNum">#ecd26b</p>
+      <div class="copy" onClick="copyCode()"></div>
+      <span class="tooltip">copy hex</span>
+    </div>
+  </div>
+  
+  <div class="name">Made with &#x1F49B by Sayali</div>
+  
+  <!-- <p class="instructions">
+  Click color card or spacebar
+  </p> -->
+
+</body>
+
+</html>
+<style>
+  :root {
+	--height:210px;
+	--width:225px;
+	--black:#2d2d2d;
+}
+
+*, *::before, *::after {
+	margin:0;
+	box-sizing: border-box;
+}
+
+body{
+	display:flex;
+	height:100vh;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.color-card {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+}
+
+.color-card__top{
+	height:var(--height);
+	width:var(--width);
+	border-radius:3px 3px 0 0 ;
+  background-color:#53ad6d;
+}
+
+.color-card__top:hover{
+	cursor:pointer;
+}
+
+.color-card__bottom{
+	display:flex;
+	align-items: center;
+	justify-content: space-around;
+	height:calc(var(--height)* .35);
+	width:var(--width);
+	background-color: white;
+	border-radius: 0 0 3px 3px;
+}
+
+.name{
+  display:flex;
+	align-items: center;
+	justify-content: space-around;
+  color: aliceblue;
+	height:calc(var(--height)* .35);
+	width:var(--width);
+	background-color: rgb(7, 10, 10);
+	border-radius: 0 0 3px 3px;
+  margin-top: 2em;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+}
+
+p.instructions {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 200;
+	font-size:18px;
+	color:var(--black);
+}
+
+p#hexNum {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-size:28px;
+	color:var(--black);
+	letter-spacing: 1px;
+}
+
+.copy:hover {
+	cursor: pointer;
+}
+
+.copy:active{
+	transform: scale(.9);
+}
+
+.copy, .copy::after { 
+	height:calc(var(--height)* .08);
+	width:calc(var(--width)* .07);
+	border-radius: 2px;
+	border:2px solid var(--black);
+	background-color: white;
+}
+
+.copy::after {
+	content:"";
+	position: absolute;
+	transform: translateX(3px) translateY(3px) translateZ(-1px);
+}
+
+/* Tooltip */
+.tooltip{
+	content:"copy hex";
+	flex: 0 0 100%;
+	display:none;
+	position:absolute;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 200;
+	font-size: 10px;
+	color:var(--black);
+	height:calc(var(--height)* .09);
+	width:calc(var(--width)* .25);
+	transform: translateX(91px) translateY(27px) ;
+}
+
+.copy:hover + .tooltip {
+	display: inline;
+}
+</style>
+
+<script>
+  // Generate random Hex values
+let randomColor = "#";
+ 
+ makeRandomColor = () => {
+ 
+   const colorValues = [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7",
+     "8",
+     "9",
+     "a",
+     "b",
+     "c",
+     "d",
+     "e",
+     "f",
+   ];
+     for (let x = 0; x < 6; x++) {
+     let index = Math.floor(Math.random() * 16);
+     let randomValue = colorValues[index];
+     randomColor += randomValue;
+        }
+ 
+   return randomColor;
+ };
+ 
+ // Generate color card
+ makeColorCard = () => {
+   makeRandomColor();
+   let hexNum = (document.getElementById("hexNum").innerHTML = randomColor);
+   let displayColor = document.getElementById("displayColor");
+   displayColor.style.backgroundColor = randomColor;
+ };
+ 
+ makeColorCard();
+ 
+ // Change color on swatch or spacebar click
+ changeColor = () => {
+   randomColor = "#";
+   makeColorCard();
+ };
+ 
+ document.addEventListener("keyup", (event) => {
+   if (event.code === "Space") {
+     randomColor = "#";
+     makeColorCard();
+   }
+ });
+ 
+ // Copy Hex code to clipboard
+ copyCode = () => { navigator.clipboard.writeText(randomColor);
+ };
+</script>
+  
